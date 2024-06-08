@@ -5,6 +5,7 @@ exports.createPost = async (req, res) => {
     const post = new Post({
         title: req.body.title,
         content: req.body.content,
+        dateCreated: req.body.dateCreated,
         userId: req.body.userId
     });
     try {

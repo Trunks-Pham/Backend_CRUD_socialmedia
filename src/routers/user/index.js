@@ -1,44 +1,3 @@
-// const express = require("express");
-// const router = express.Router();
-
-// const userModel = require("../../models/user.model");
-
-// router.post('/create-user',async (req, res) => {
-//     const { name, email } = req.body; 
-//     console.log("req.body:",req.body)
-
-//     const user = new userModel({
-//         name,
-//         email
-//     });
-//     await user.save()
-//     return res.json({
-//         message: 'user created successfully'
-//     });
-          
-// });
-
-// router.get('/get-user-detail/:id', (req, res) => {
-//     const { id } = req.params;
-
-//     userModel.findById(id)
-//         // .populate.findById(id)
-//         .then((user) => {
-//             res.send(user);
-//         })
-//         .catch((err) => {
-//             res.status(500).send(err);
-//         });
-// });
-
-// router.get('/test', (req, res) => {
-//     res.send('test');
-// });
-
-// module.exports = router;
-
-//==============================================
-
 const express = require("express");
 const router = express.Router();
 
@@ -46,7 +5,7 @@ const userModel = require("../../models/user.model");
 
 // Thêm người dùng mới
 router.post('/create-user', async (req, res) => {
-    const { name, email } = req.body;
+    const { name, email,phoneNumber,nickName } = req.body;
 
     if (!name || !email) {
         return res.status(400).json({ error: 'Missing name or email field' });
@@ -54,8 +13,7 @@ router.post('/create-user', async (req, res) => {
 
     try {
         const user = new userModel({
-            name,
-            email
+            name, email, phoneNumber, nickName 
         });
 
         await user.save();
@@ -86,6 +44,34 @@ router.get('/get-user-detail/:id', (req, res) => {
             res.status(500).send(err);
         });
 });
+
+// // Lấy thông tin người dùng theo ID và các bài đăng của họ
+// router.get('/get-user-detail/:id', (req, res) => {
+//     const { id } = req.params;
+
+//     userModel.findById(id)
+//         .then((user) => {
+//             if (!user) {
+//                 return res.status(404).json({ error: 'User not found' });
+//             }
+
+//             // Tìm tất cả các bài đăng của người dùng
+//             postModel.find({ userId: id })
+//                 .then((posts) => {
+//                     // Gửi thông tin người dùng và các bài đăng của họ
+//                     res.json({ user, posts });
+//                 })
+//                 .catch((err) => {
+//                     console.error(err);
+//                     res.status(500).send(err);
+//                 });
+//         })
+//         .catch((err) => {
+//             console.error(err);
+//             res.status(500).send(err);
+//         });
+// });
+
 
 // Sửa thông tin người dùng
 router.put('/update-user/:id', async (req, res) => {
