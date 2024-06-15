@@ -1,38 +1,3 @@
-// const mongoose = require("mongoose");
-
-// const userSchema = new mongoose.Schema({
-//     name: {
-//         type: String,
-//         required: true
-//     },
-//     nickName: {
-//         type: String,
-//         required: true
-//     },
-//     email: {
-//         type: String,
-//         required: true
-//     },
-//     phoneNumber: {
-//         type: String,
-//         required: true
-//     },
-//     posts: [{
-//         type: mongoose.Schema.Types.ObjectId,
-//         ref: 'Post',
-//         default: []
-//     }],
-// });
-// module.exports = mongoose.model("User", userSchema);
-// Kiểm tra tên có hợp lệ không (không được chứa số, )
-
-// Kiểm tra xem email có hợp lệ không (phải có @ và .)
-
-// Kiểm tra số điện thoại có hợp lệ không ( sdt VN 10 số và không được chứa chữ, ký tự đặc biệt)
-
-// Kiểm tra người dùng có tồn tại hay chưa (nếu tồn tại thì không được tạo)
-
-
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
@@ -89,5 +54,7 @@ userSchema.pre('save', async function(next) {
     }
     next();
 });
+
+
 
 module.exports = mongoose.model("User", userSchema);
