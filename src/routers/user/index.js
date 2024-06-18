@@ -26,6 +26,9 @@ const userController = require("../../controllers/user.controller");
 // Tạo người dùng
 router.post('/create-user', userController.createUser);
 
+//Hiển thị tất cả thông tin người dùng
+router.get('/get-user', userController.getAllUsers);
+
 // Tìm người dùng và thông tin bài viết theo ID
 router.get('/get-user-detail/:id', userController.getUserDetail);
 
