@@ -16,7 +16,7 @@ exports.createUser = async (req, res) => {
 
         await user.save();
         return res.json({
-            message: 'User created successfully'
+            message: 'Tạo người dùng thành công',
         });
     } catch (err) {
         console.error(err);
@@ -48,7 +48,7 @@ exports.getUserDetail = async (req, res) => {
     try {
         const user = await userModel.findById(id).populate('posts');
         if (!user) {
-            return res.status(404).json({ error: 'User not found' });
+            return res.status(404).json({ error: 'Không tìm thấy người dùng' });
         }
 
         const posts = await Post.find({ userId: id });

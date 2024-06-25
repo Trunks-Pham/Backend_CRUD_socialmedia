@@ -67,26 +67,51 @@ exports.updatePost = async (req, res) => {
     }
 };
 
+// // Xóa một bài viết
+// exports.deletePost = async (req, res) => {
+//     try {
+//         const post = await Post.findById(req.params.id);
+//         if (!post) {
+//             return res.status(404).json({ message: 'Post not found' });
+//         }
+
+//         await post.remove();
+
+//         // Xóa bài viết khỏi danh sách bài viết của người dùng
+//         const user = await userModel.findById(post.userId);
+//         user.posts.pull(post._id);
+//         await user.save();
+
+//         res.sendStatus(204);
+//     } catch (err) {
+//         res.status(500).json({ message: err.message });
+//     }
+// }; 
 // Xóa một bài viết
 exports.deletePost = async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
         if (!post) {
-            return res.status(404).json({ message: 'Post not found' });
+            return res.status(404).json({ message: 'Bài viết không tồn tại' });
         }
 
-        await post.remove();
+        await post.deleteOne();
 
         // Xóa bài viết khỏi danh sách bài viết của người dùng
         const user = await userModel.findById(post.userId);
-        user.posts.pull(post._id);
-        await user.save();
+        if (user) {
+            user.posts.pull(post._id);
+            await user.save();
+        }
 
-        res.sendStatus(204);
+        res.json({ message: 'Đã xóa bài viết thành công' });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
+
+
+
 
 // Middleware để lấy một bài viết cụ thể theo ID
 exports.getPost = async (req, res, next) => {
